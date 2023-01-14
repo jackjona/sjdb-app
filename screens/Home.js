@@ -52,6 +52,20 @@ const Home = ({ navigation }) => {
     getPosts();
   }, []);
 
+  const getMorePosts = async () => {
+    try {
+      const response = await fetch(
+        "https://sjdbh.ycdsb.ca/wp-json/wp/v2/posts?_fields=id,slug,date,title.rendered,post_excerpt_stackable&per_page=50"
+      );
+      const json = await response.json();
+      setData(json);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const tagsStyles = {
     body: {
       color: "#121212",
@@ -91,6 +105,8 @@ const Home = ({ navigation }) => {
           ) : (
             <FlatList
               data={data}
+              initialNumToRender={3}
+              onScrollEndDrag={getMorePosts}
               keyExtractor={({ id }, index) => id}
               renderItem={({ item }) => (
                 <TouchableHighlight
@@ -102,7 +118,11 @@ const Home = ({ navigation }) => {
                 >
                   <Text style={[styles.text]}>
                     <View>
-                      <Text style={styles.title}>{item.title.rendered}</Text>
+                      <Text style={styles.title}>
+                        {item.title.rendered
+                          .replace("&#8211;", "-")
+                          .replace("&#8217;", "'")}
+                      </Text>
                       <Text style={styles.date}>{item.date}</Text>
                     </View>
                     <RenderHtml

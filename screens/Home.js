@@ -117,7 +117,7 @@ const Home = ({ navigation }) => {
         {/*  <Text style={[styles.text, styles.postsHeading]}>School News:</Text> */}
         <View style={{ flex: 1, padding: 24 }}>
           {isLoading ? (
-            <ActivityIndicator size="large" />
+            <ActivityIndicator />
           ) : (
             <FlatList
               data={data}

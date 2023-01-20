@@ -62,7 +62,7 @@ const Post = ({ navigation, route }) => {
       <View style={styles.contentContainer}>
         <View style={{ flex: 1, padding: 24 }}>
           {isLoading ? (
-            <ActivityIndicator size="large" />
+            <ActivityIndicator />
           ) : (
             <FlatList
               showsVerticalScrollIndicator={false}

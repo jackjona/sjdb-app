@@ -9,18 +9,20 @@ import { Ionicons } from "@expo/vector-icons";
 import Home from "./screens/Home";
 import Post from "./screens/Post";
 import Calendar from "./screens/Calendar";
+import Event from "./screens/Event";
 import Profile from "./screens/Profile";
 import Settings from "./screens/Settings";
 
 const Tab = createBottomTabNavigator();
 
 const HomeStack = createNativeStackNavigator();
+const CalendarStack = createNativeStackNavigator();
 
 function HomeStackScreen({ navigation }) {
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen
-        name="HomeScreen"
+        name="Home"
         component={Home}
         options={{ headerShown: false }}
       />
@@ -48,6 +50,45 @@ function HomeStackScreen({ navigation }) {
   );
 }
 
+function CalendarStackScreen({ navigation }) {
+  return (
+    <CalendarStack.Navigator>
+      <CalendarStack.Screen
+        name="Calendar"
+        component={Calendar}
+        options={{
+          headerShown: true,
+          headerTitleStyle: { color: "#ffffff" },
+          labelVisible: false,
+          headerStyle: {
+            backgroundColor: "#4C53A6",
+          },
+        }}
+      />
+      <CalendarStack.Screen
+        name="Event"
+        component={Event}
+        options={{
+          headerShown: true,
+          headerTitleStyle: { color: "#ffffff" },
+          labelVisible: false,
+          headerStyle: {
+            backgroundColor: "#4C53A6",
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Calendar")}
+              style={styles.backButton}
+            >
+              <Ionicons name="chevron-back-outline" size={30} color="#ffffff" />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+    </CalendarStack.Navigator>
+  );
+}
+
 function App() {
   return (
     <NavigationContainer>
@@ -70,9 +111,10 @@ function App() {
         }}
       >
         <Tab.Screen
-          name="Home"
+          name="HomeScreen"
           component={HomeStackScreen}
           options={{
+            title: "Home",
             headerShown: false,
             tabBarIcon: ({ focused, color, size }) =>
               focused ? (
@@ -86,9 +128,11 @@ function App() {
         />
 
         <Tab.Screen
-          name="Calendar"
-          component={Calendar}
+          name="CalendarScreen"
+          component={CalendarStackScreen}
           options={{
+            title: "Calendar",
+            headerShown: false,
             tabBarIcon: ({ focused, color, size }) =>
               focused ? (
                 <TouchableOpacity style={styles.tabIcon}>

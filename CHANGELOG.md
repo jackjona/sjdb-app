@@ -10,6 +10,17 @@ Dates are formatted in YYMMDD format. Each major version has a codename, this is
 
 ### Added
 
+- Build event screen
+
+### Changed
+
+- Activity indicator size from large to small
+- Rename screen names for screen stacks
+
+## [0.0.9] - Jan 19, 2023
+
+### Added
+
 - Build calendar screen
 - Fetch calendar events from Google Calendar
 - Refresh calendar events when user swipes down and holds

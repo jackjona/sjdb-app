@@ -4,6 +4,7 @@ import {
   View,
   Text,
   FlatList,
+  TouchableHighlight,
   ActivityIndicator,
 } from "react-native";
 
@@ -11,7 +12,6 @@ const Calendar = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [data, setData] = useState([]);
-
   {
     /* 
       API Key is: AIzaSyCyBPIqrV96idsvBD1-V8rfMKNE2MLhbCY
@@ -61,15 +61,6 @@ const Calendar = ({ navigation }) => {
     }
   };
 
-  const date = new Date();
-
-  const options = {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    weekday: "long",
-  };
-
   function timeConvert(time) {
     time = time
       .toString()
@@ -91,7 +82,7 @@ const Calendar = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={[styles.text, styles.heading]}>Events</Text>
       {isLoading ? (
-        <ActivityIndicator size="large" />
+        <ActivityIndicator />
       ) : (
         <FlatList
           data={data}
@@ -100,41 +91,43 @@ const Calendar = ({ navigation }) => {
           onScrollEndDrag={getMoreEvents}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <View style={styles.eventBubble}>
-              {/* TO DO: Make event bubble clickable to get more info about the event. */}
+            <TouchableHighlight
+              onPress={() => navigation.navigate("Event", { eventID: item.id })}
+              underlayColor="gray"
+              style={styles.eventBubble}
+            >
+              <View>
+                {/* TO DO: Make event bubble clickable to get more info about the event. */}
 
-              <Text style={[styles.text, styles.eventTitle]}>
-                {item.summary}
-              </Text>
+                <Text style={[styles.text, styles.eventTitle]}>
+                  {item.summary}
+                </Text>
 
-              {item.start.date ? (
-                <Text style={[styles.text, styles.eventDate]}>
-                  {date.toLocaleDateString("en-US", options, item.start.date)}
-                </Text>
-              ) : (
-                <Text style={[styles.text, styles.eventDate]}>
-                  {date.toLocaleDateString(
-                    "en-US",
-                    options,
-                    item.start.dateTime.split("T")[0]
-                  )}
-                  {"\n"} {/* Replace with a divider */}
-                  {timeConvert(
-                    item.start.dateTime
-                      .replace(":00", "")
-                      .split("T")[1]
-                      .split("-")[0]
-                  )}
-                  {" - "}
-                  {timeConvert(
-                    item.end.dateTime
-                      .replace(":00", "")
-                      .split("T")[1]
-                      .split("-")[0]
-                  )}
-                </Text>
-              )}
-            </View>
+                {item.start.date ? (
+                  <Text style={[styles.text, styles.eventDate]}>
+                    {item.start.date} - {item.end.date}
+                  </Text>
+                ) : (
+                  <Text style={[styles.text, styles.eventDate]}>
+                    {item.start.dateTime.split("T")[0]}
+                    {"\n"}
+                    {timeConvert(
+                      item.start.dateTime
+                        .replace(":00", "")
+                        .split("T")[1]
+                        .split("-")[0]
+                    )}
+                    {" - "}
+                    {timeConvert(
+                      item.end.dateTime
+                        .replace(":00", "")
+                        .split("T")[1]
+                        .split("-")[0]
+                    )}
+                  </Text>
+                )}
+              </View>
+            </TouchableHighlight>
           )}
         />
       )}

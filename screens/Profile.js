@@ -33,6 +33,7 @@ const Profile = ({ navigation }) => {
           </Text>
         </View>
         <View style={styles.barcode}>
+          {/* TO DO: Dynamically Generate Barcode */}
           <Image
             style={styles.barcodeImage}
             source={require("../assets/barcode.png")}

@@ -1,6 +1,6 @@
 {
   "name": "sjdbapp",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",

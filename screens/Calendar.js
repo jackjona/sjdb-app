@@ -1,10 +1,143 @@
-import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
 
 const Calendar = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [data, setData] = useState([]);
+
+  {
+    /* 
+      API Key is: AIzaSyCyBPIqrV96idsvBD1-V8rfMKNE2MLhbCY
+      The scope must be restricted and the key should be put into an environment variable
+  */
+  }
+  const getEvents = async () => {
+    try {
+      const response = await fetch(
+        "https://www.googleapis.com/calendar/v3/calendars/sjdbh@ycdsb.ca/events?key=AIzaSyCyBPIqrV96idsvBD1-V8rfMKNE2MLhbCY&singleEvents=true&orderBy=startTime&timeMin=2023-01-19T00:00:00-07:00&maxResults=10"
+      );
+      const json = await response.json();
+      setData(json.items);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const refreshEvents = async () => {
+    setIsRefreshing(true);
+    try {
+      const response = await fetch(
+        "https://www.googleapis.com/calendar/v3/calendars/sjdbh@ycdsb.ca/events?key=AIzaSyCyBPIqrV96idsvBD1-V8rfMKNE2MLhbCY&singleEvents=true&orderBy=startTime&timeMin=2023-01-19T00:00:00-07:00&maxResults=10"
+      );
+      const json = await response.json();
+      setData(json.items);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
+  const getMoreEvents = async () => {
+    try {
+      const response = await fetch(
+        "https://www.googleapis.com/calendar/v3/calendars/sjdbh@ycdsb.ca/events?key=AIzaSyCyBPIqrV96idsvBD1-V8rfMKNE2MLhbCY&singleEvents=true&orderBy=startTime&timeMin=2023-01-19T00:00:00-07:00&maxResults=50"
+      );
+      const json = await response.json();
+      setData(json.items);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const date = new Date();
+
+  const options = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    weekday: "long",
+  };
+
+  function timeConvert(time) {
+    time = time
+      .toString()
+      .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+    if (time.length > 1) {
+      time = time.slice(1);
+      time[5] = +time[0] < 12 ? "AM" : "PM";
+      time[0] = +time[0] % 12 || 12;
+    }
+    return time.join("");
+  }
+
+  useEffect(() => {
+    getEvents();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Text>Calendar Screen</Text>
+      <Text style={[styles.text, styles.heading]}>Events</Text>
+      {isLoading ? (
+        <ActivityIndicator size="large" />
+      ) : (
+        <FlatList
+          data={data}
+          onRefresh={refreshEvents}
+          refreshing={isRefreshing}
+          onScrollEndDrag={getMoreEvents}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <View style={styles.eventBubble}>
+              {/* TO DO: Make event bubble clickable to get more info about the event. */}
+
+              <Text style={[styles.text, styles.eventTitle]}>
+                {item.summary}
+              </Text>
+
+              {item.start.date ? (
+                <Text style={[styles.text, styles.eventDate]}>
+                  {date.toLocaleDateString("en-US", options, item.start.date)}
+                </Text>
+              ) : (
+                <Text style={[styles.text, styles.eventDate]}>
+                  {date.toLocaleDateString(
+                    "en-US",
+                    options,
+                    item.start.dateTime.split("T")[0]
+                  )}
+                  {"\n"} {/* Replace with a divider */}
+                  {timeConvert(
+                    item.start.dateTime
+                      .replace(":00", "")
+                      .split("T")[1]
+                      .split("-")[0]
+                  )}
+                  {" - "}
+                  {timeConvert(
+                    item.end.dateTime
+                      .replace(":00", "")
+                      .split("T")[1]
+                      .split("-")[0]
+                  )}
+                </Text>
+              )}
+            </View>
+          )}
+        />
+      )}
     </View>
   );
 };
@@ -12,8 +145,32 @@ const Calendar = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    padding: 12,
+    backgroundColor: "#04234F",
+  },
+  text: {
+    color: "#FFFFFF",
+  },
+  heading: {
+    fontSize: 20,
+    fontWeight: "600",
+    marginVertical: 20,
+    marginLeft: 10,
+  },
+  eventBubble: {
+    backgroundColor: "#2C2C2E",
+    marginVertical: 12,
+    marginHorizontal: 12,
+    paddingVertical: 26,
+    borderRadius: 4,
+  },
+  eventTitle: {
+    fontSize: 16,
+    paddingHorizontal: 20,
+  },
+  eventDate: {
+    fontSize: 10,
+    paddingHorizontal: 20,
   },
 });
 export default Calendar;

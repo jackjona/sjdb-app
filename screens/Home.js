@@ -15,7 +15,8 @@ import RenderHtml from "react-native-render-html";
 
 const Home = ({ navigation }) => {
   const { width } = useWindowDimensions();
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [data, setData] = useState([]);
 
   const name = "Miku H.";
@@ -34,7 +35,12 @@ const Home = ({ navigation }) => {
     return "Welcome!";
   }
 
+  useEffect(() => {
+    getPosts();
+  }, []);
+
   const getPosts = async () => {
+    setIsLoading(true);
     try {
       const response = await fetch(
         "https://sjdbh.ycdsb.ca/wp-json/wp/v2/posts?_fields=id,slug,date,title.rendered,post_excerpt_stackable&per_page=20"
@@ -44,14 +50,24 @@ const Home = ({ navigation }) => {
     } catch (error) {
       console.error(error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    getPosts();
-  }, []);
-
+  const refreshPosts = async () => {
+    setIsRefreshing(true);
+    try {
+      const response = await fetch(
+        "https://sjdbh.ycdsb.ca/wp-json/wp/v2/posts?_fields=id,slug,date,title.rendered,post_excerpt_stackable&per_page=20"
+      );
+      const json = await response.json();
+      setData(json);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
   const getMorePosts = async () => {
     try {
       const response = await fetch(
@@ -62,7 +78,7 @@ const Home = ({ navigation }) => {
     } catch (error) {
       console.error(error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -105,7 +121,9 @@ const Home = ({ navigation }) => {
           ) : (
             <FlatList
               data={data}
-              initialNumToRender={3}
+              initialNumToRender={6}
+              onRefresh={refreshPosts}
+              refreshing={isRefreshing}
               onScrollEndDrag={getMorePosts}
               keyExtractor={({ id }, index) => id}
               renderItem={({ item }) => (

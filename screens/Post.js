@@ -14,7 +14,7 @@ import WebView from "react-native-webview";
 
 const Post = ({ navigation, route }) => {
   const { width } = useWindowDimensions();
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
 
   const getPosts = async () => {
@@ -27,7 +27,7 @@ const Post = ({ navigation, route }) => {
     } catch (error) {
       console.error(error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -72,7 +72,11 @@ const Post = ({ navigation, route }) => {
                 <View style={styles.postsContainer}>
                   <Text style={[styles.text]}>
                     <View>
-                      <Text style={styles.title}>{item.title.rendered}</Text>
+                      <Text style={styles.title}>
+                        {item.title.rendered
+                          .replace("&#8211;", "-")
+                          .replace("&#8217;", "'")}
+                      </Text>
                       <Text style={styles.date}>{item.date}</Text>
                     </View>
                     <RenderHtml

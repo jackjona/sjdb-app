@@ -6,7 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Dates are formatted in YYMMDD format. Each major version has a codename, this is noted with brackets beside the version number.
 
-## [0.0.9] - Jan 19, 2023
+## [0.0.11] - Jan 22, 2023
+
+### Added
+
+- Add "View on Google Calendar" button to the event info
+
+### Changed
+
+- Format time from _YYYY-MM-DDT00:00:00_ to _YYYY/MM/DD 00:00 PM/AM_ on the Home and Post screens
+- Get the current date and use it in the api request for the events
+
+## [0.0.10] - Jan 19, 2023
 
 ### Added
 

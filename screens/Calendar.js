@@ -12,16 +12,22 @@ const Calendar = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [data, setData] = useState([]);
+
+  const currentDate = new Date().toISOString().slice(0, 10);
+
   {
     /* 
       API Key is: AIzaSyCyBPIqrV96idsvBD1-V8rfMKNE2MLhbCY
       The scope must be restricted and the key should be put into an environment variable
+      ---
+      Testing API URL:
+      https://www.googleapis.com/calendar/v3/calendars/sjdbh@ycdsb.ca/events?key=AIzaSyCyBPIqrV96idsvBD1-V8rfMKNE2MLhbCY&singleEvents=true&orderBy=startTime&timeMin=2023-01-22T00:00:00-07:00&maxResults=10
   */
   }
   const getEvents = async () => {
     try {
       const response = await fetch(
-        "https://www.googleapis.com/calendar/v3/calendars/sjdbh@ycdsb.ca/events?key=AIzaSyCyBPIqrV96idsvBD1-V8rfMKNE2MLhbCY&singleEvents=true&orderBy=startTime&timeMin=2023-01-19T00:00:00-07:00&maxResults=10"
+        `https://www.googleapis.com/calendar/v3/calendars/sjdbh@ycdsb.ca/events?key=AIzaSyCyBPIqrV96idsvBD1-V8rfMKNE2MLhbCY&singleEvents=true&orderBy=startTime&timeMin=${currentDate}T00:00:00-07:00&maxResults=10`
       );
       const json = await response.json();
       setData(json.items);
@@ -36,7 +42,7 @@ const Calendar = ({ navigation }) => {
     setIsRefreshing(true);
     try {
       const response = await fetch(
-        "https://www.googleapis.com/calendar/v3/calendars/sjdbh@ycdsb.ca/events?key=AIzaSyCyBPIqrV96idsvBD1-V8rfMKNE2MLhbCY&singleEvents=true&orderBy=startTime&timeMin=2023-01-19T00:00:00-07:00&maxResults=10"
+        `https://www.googleapis.com/calendar/v3/calendars/sjdbh@ycdsb.ca/events?key=AIzaSyCyBPIqrV96idsvBD1-V8rfMKNE2MLhbCY&singleEvents=true&orderBy=startTime&timeMin=${currentDate}T00:00:00-07:00&maxResults=10`
       );
       const json = await response.json();
       setData(json.items);
@@ -50,7 +56,7 @@ const Calendar = ({ navigation }) => {
   const getMoreEvents = async () => {
     try {
       const response = await fetch(
-        "https://www.googleapis.com/calendar/v3/calendars/sjdbh@ycdsb.ca/events?key=AIzaSyCyBPIqrV96idsvBD1-V8rfMKNE2MLhbCY&singleEvents=true&orderBy=startTime&timeMin=2023-01-19T00:00:00-07:00&maxResults=50"
+        `https://www.googleapis.com/calendar/v3/calendars/sjdbh@ycdsb.ca/events?key=AIzaSyCyBPIqrV96idsvBD1-V8rfMKNE2MLhbCY&singleEvents=true&orderBy=startTime&timeMin=${currentDate}T00:00:00-07:00&maxResults=50`
       );
       const json = await response.json();
       setData(json.items);
@@ -61,6 +67,10 @@ const Calendar = ({ navigation }) => {
     }
   };
 
+  useEffect(() => {
+    getEvents();
+  }, []);
+
   function timeConvert(time) {
     time = time
       .toString()
@@ -68,15 +78,15 @@ const Calendar = ({ navigation }) => {
 
     if (time.length > 1) {
       time = time.slice(1);
+      /* Show AM or PM based on time value */
       time[5] = +time[0] < 12 ? "AM" : "PM";
+      /* Hide seconds */
+      time[3] = time[3] && "";
+      /* Convert from 24hr time to 12 hour time */
       time[0] = +time[0] % 12 || 12;
     }
     return time.join("");
   }
-
-  useEffect(() => {
-    getEvents();
-  }, []);
 
   return (
     <View style={styles.container}>
@@ -105,25 +115,18 @@ const Calendar = ({ navigation }) => {
 
                 {item.start.date ? (
                   <Text style={[styles.text, styles.eventDate]}>
-                    {item.start.date} - {item.end.date}
+                    {item.start.date.replace(/-/g, "/")} -{" "}
+                    {item.end.date.replace(/-/g, "/")}
                   </Text>
                 ) : (
                   <Text style={[styles.text, styles.eventDate]}>
-                    {item.start.dateTime.split("T")[0]}
+                    {item.start.dateTime.split("T")[0].replace(/-/g, "/")}
                     {"\n"}
                     {timeConvert(
-                      item.start.dateTime
-                        .replace(":00", "")
-                        .split("T")[1]
-                        .split("-")[0]
+                      item.start.dateTime.split("T")[1].split("-")[0]
                     )}
                     {" - "}
-                    {timeConvert(
-                      item.end.dateTime
-                        .replace(":00", "")
-                        .split("T")[1]
-                        .split("-")[0]
-                    )}
+                    {timeConvert(item.end.dateTime.split("T")[1].split("-")[0])}
                   </Text>
                 )}
               </View>

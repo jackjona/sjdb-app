@@ -4,28 +4,14 @@ import {
   Text,
   View,
   SafeAreaView,
-  FlatList,
   ActivityIndicator,
   Linking,
+  TouchableOpacity,
 } from "react-native";
-import { Header } from "react-native/Libraries/NewAppScreen";
 
 const Event = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
-
-  function timeConvert(time) {
-    time = time
-      .toString()
-      .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-
-    if (time.length > 1) {
-      time = time.slice(1);
-      time[5] = +time[0] < 12 ? "AM" : "PM";
-      time[0] = +time[0] % 12 || 12;
-    }
-    return time.join("");
-  }
 
   const getEvent = async () => {
     try {
@@ -46,9 +32,27 @@ const Event = ({ navigation, route }) => {
       setIsLoading(false);
     }
   };
+
   useEffect(() => {
     getEvent();
   }, []);
+
+  function timeConvert(time) {
+    time = time
+      .toString()
+      .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+    if (time.length > 1) {
+      time = time.slice(1);
+      /* Show AM or PM based on time value */
+      time[5] = +time[0] < 12 ? "AM" : "PM";
+      /* Hide seconds */
+      time[3] = time[3] && "";
+      /* Convert from 24hr time to 12 hour time */
+      time[0] = +time[0] % 12 || 12;
+    }
+    return time.join("");
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -65,29 +69,24 @@ const Event = ({ navigation, route }) => {
                 <Text style={[styles.text, styles.eventDate]}>
                   {data.start.dateTime.split("T")[0]}
                   {"\n"}
-                  {timeConvert(
-                    data.start.dateTime
-                      .replace(":00", "")
-                      .split("T")[1]
-                      .split("-")[0]
-                  )}
+                  {timeConvert(data.start.dateTime.split("T")[1].split("-")[0])}
                   {" - "}
-                  {timeConvert(
-                    data.end.dateTime
-                      .replace(":00", "")
-                      .split("T")[1]
-                      .split("-")[0]
-                  )}
+                  {timeConvert(data.end.dateTime.split("T")[1].split("-")[0])}
                 </Text>
               ) : (
                 <Text style={[styles.text, styles.eventDate]}>
-                  {data.start.date} - {data.end.date}
+                  {data.start.date.replace(/-/g, "/")} -{" "}
+                  {data.end.date.replace(/-/g, "/")}
                 </Text>
               )}
 
               {data.description && data.description.includes("https") ? (
                 <Text
-                  style={[styles.text, styles.eventDescription, styles.link]}
+                  style={[
+                    styles.text,
+                    styles.eventDescription,
+                    styles.eventLink,
+                  ]}
                   onPress={() => Linking.openURL(data.description)}
                 >
                   {data.description}
@@ -96,6 +95,18 @@ const Event = ({ navigation, route }) => {
                 <Text style={[styles.text, styles.eventDescription]}>
                   {data.description}
                 </Text>
+              )}
+
+              {data.htmlLink && (
+                <TouchableOpacity
+                  style={styles.openGCal}
+                  activeOpacity={0.6}
+                  onPress={() => Linking.openURL(data.htmlLink)}
+                >
+                  <Text style={[styles.text, styles.openGCalText]}>
+                    View On Google Calendar
+                  </Text>
+                </TouchableOpacity>
               )}
             </>
           )}
@@ -139,8 +150,20 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginBottom: 20,
   },
-  link: {
+  eventLink: {
     color: "#6495ED",
+  },
+  openGCal: {
+    marginBottom: 20,
+    fontSize: 14,
+    borderRadius: 6,
+    backgroundColor: "gray",
+    width: "70%",
+    paddingVertical: 10,
+    paddingHorizontal: 6,
+  },
+  openGCalText: {
+    fontSize: 14,
   },
 });
 

@@ -35,6 +35,23 @@ const Post = ({ navigation, route }) => {
     getPosts();
   }, []);
 
+  function timeConvert(time) {
+    time = time
+      .toString()
+      .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+    if (time.length > 1) {
+      time = time.slice(1);
+      /* Show AM or PM based on time value */
+      time[5] = +time[0] < 12 ? "AM" : "PM";
+      /* Hide seconds */
+      time[3] = time[3] && "";
+      /* Convert from 24hr time to 12 hour time */
+      time[0] = +time[0] % 12 || 12;
+    }
+    return time.join("");
+  }
+
   const renderers = {
     iframe: IframeRenderer,
   };
@@ -77,7 +94,10 @@ const Post = ({ navigation, route }) => {
                           .replace("&#8211;", "-")
                           .replace("&#8217;", "'")}
                       </Text>
-                      <Text style={styles.date}>{item.date}</Text>
+                      <Text style={styles.date}>
+                        {item.date.replace(/-/g, "/").split("T")[0]}{" "}
+                        {timeConvert(item.date.split("T")[1])}
+                      </Text>
                     </View>
                     <RenderHtml
                       renderers={renderers}

@@ -1,7 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Barcode from "../components/Barcode";
 
 const Profile = ({ navigation }) => {
+  const [nameValue, setNameValue] = useState("");
+  const [idValue, setIdValue] = useState("");
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  useEffect(() => {
+    isFocused && getData();
+  }, [isFocused]);
+
+  const getData = async () => {
+    try {
+      const studentName = await AsyncStorage.getItem("student_name");
+      const idNumber = await AsyncStorage.getItem("studentID_number");
+
+      if (studentName || idNumber !== null) {
+        setNameValue(studentName);
+        setIdValue(idNumber);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={[styles.card, styles.cardShadow]}>
@@ -19,25 +48,32 @@ const Profile = ({ navigation }) => {
           style={styles.cardImage}
         />
         <View style={styles.cardContent}>
-          <Text style={[styles.text, styles.studentName]}>Miku H.</Text>
+          <Text style={[styles.text, styles.studentName]}>
+            {nameValue ? nameValue : "Student"}
+          </Text>
           <Text style={[styles.text, styles.position]}>Student</Text>
         </View>
         <View style={styles.cardDetails}>
           <Text style={styles.text}>
             <Text style={styles.boldText}>Student #: </Text>
-            <Text style={styles.studentInfo}>100742849</Text>
+            <Text style={styles.studentInfo}>
+              {idValue ? idValue : "000000000"}
+            </Text>
           </Text>
           <Text style={styles.text}>
             <Text style={styles.boldText}>Valid: </Text>
-            <Text style={styles.studentInfo}>2022/2023</Text>
+            <Text style={styles.studentInfo}>
+              {new Date().getFullYear() - 1}/{new Date().getFullYear()}
+            </Text>
           </Text>
         </View>
         <View style={styles.barcode}>
-          {/* TO DO: Dynamically Generate Barcode */}
-          <Image
-            style={styles.barcodeImage}
-            source={require("../assets/barcode.png")}
-          />
+          <View style={styles.barcodeImage}>
+            <Barcode
+              value={idValue ? idValue : "000000000"}
+              options={{ format: "CODE39", background: "white" }}
+            />
+          </View>
         </View>
       </View>
     </View>
@@ -49,14 +85,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#04234F",
+    backgroundColor: "#0d152d",
   },
   text: {
-    color: "#ffffff",
+    color: "#EFEFEF",
   },
-  text: {
-    color: "#ffffff",
-  },
+
   boldText: {
     fontSize: 16.5,
     fontWeight: "bold",
@@ -64,7 +98,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "#121212",
     width: 350,
-    height: 560,
+    height: 600,
     borderRadius: 20,
   },
   cardShadow: {
@@ -90,7 +124,7 @@ const styles = StyleSheet.create({
   },
   schoolName: {
     fontFamily: "AppleSDGothicNeo-Regular",
-    /* fontFamily: "Optima-Regular, Palatin, Trebuchet MSo",*/
+    // fontFamily: "Optima-Regular, Palatin, Trebuchet MSo",
     fontSize: 20,
     fontWeight: "900",
     marginLeft: 10,
@@ -98,12 +132,12 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   cardContent: {
-    paddingTop: 50,
+    marginTop: 30,
     alignItems: "center",
     textAlign: "center",
   },
   cardDetails: {
-    paddingTop: 24,
+    marginTop: 24,
     alignItems: "center",
   },
   studentName: {
@@ -120,13 +154,18 @@ const styles = StyleSheet.create({
     fontSize: 16.5,
   },
   barcode: {
+    display: "flex",
+    justifyContent: "center",
     alignItems: "center",
+    alignSelf: "center",
+    marginTop: 24,
   },
   barcodeImage: {
-    marginTop: 10,
-    width: 180,
-    height: 80,
+    alignItems: "center",
     backgroundColor: "#ffffff",
+    width: 300,
+    height: 114,
+    borderRadius: 6,
   },
 });
 export default Profile;

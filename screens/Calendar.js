@@ -103,7 +103,7 @@ const Calendar = ({ navigation }) => {
           renderItem={({ item }) => (
             <TouchableHighlight
               onPress={() => navigation.navigate("Event", { eventID: item.id })}
-              underlayColor="gray"
+              underlayColor="#2C2C2E"
               style={styles.eventBubble}
             >
               <View>
@@ -142,10 +142,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 12,
-    backgroundColor: "#04234F",
+    backgroundColor: "#0d152d",
   },
   text: {
-    color: "#FFFFFF",
+    color: "#EFEFEF",
   },
   heading: {
     fontSize: 20,
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   eventBubble: {
-    backgroundColor: "#2C2C2E",
+    backgroundColor: "#121212",
     marginVertical: 12,
     marginHorizontal: 12,
     paddingVertical: 26,

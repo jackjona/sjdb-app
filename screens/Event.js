@@ -121,17 +121,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#04234F",
+    backgroundColor: "#0d152d",
   },
   text: {
-    color: "#FFFFFF",
+    color: "#EFEFEF",
   },
   heading: {
     fontSize: 20,
     fontWeight: "600",
   },
   eventBubble: {
-    backgroundColor: "#2C2C2E",
+    backgroundColor: "#121212",
     borderRadius: 4,
     paddingHorizontal: 40,
     width: "90%",
@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
     color: "#6495ED",
   },
   openGCal: {
+    alignItems: "center",
     marginBottom: 20,
     fontSize: 14,
     borderRadius: 6,

@@ -12,15 +12,17 @@ import {
 } from "react-native";
 import { useWindowDimensions } from "react-native";
 import RenderHtml from "react-native-render-html";
+import { useIsFocused } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Home = ({ navigation }) => {
   const { width } = useWindowDimensions();
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [data, setData] = useState([]);
+  const [nameValue, setNameValue] = useState("");
 
-  const name = "Miku H.";
-
+  const isFocused = useIsFocused();
   const currentTime = new Date().getHours();
 
   function Greeting(props) {
@@ -37,7 +39,24 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     getPosts();
+    getData();
   }, []);
+
+  useEffect(() => {
+    isFocused && getData();
+  }, [isFocused]);
+
+  const getData = async () => {
+    try {
+      const studentName = await AsyncStorage.getItem("student_name");
+
+      if (studentName || idNumber !== null) {
+        setNameValue(studentName);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   function timeConvert(time) {
     time = time
@@ -101,7 +120,7 @@ const Home = ({ navigation }) => {
 
   const tagsStyles = {
     body: {
-      color: "#121212",
+      color: "#EFEFEF",
       maxHeight: "140px",
     },
     img: {
@@ -117,7 +136,7 @@ const Home = ({ navigation }) => {
             <Text style={[styles.text, styles.greetingText]}>
               <Greeting time={currentTime} />
             </Text>
-            <Text style={[styles.text, styles.greetingName]}>{name}</Text>
+            <Text style={[styles.text, styles.greetingName]}>{nameValue}</Text>
           </View>
           <TouchableOpacity
             onPress={() => navigation.navigate("Profile")}
@@ -148,7 +167,7 @@ const Home = ({ navigation }) => {
                   onPress={() =>
                     navigation.navigate("Post", { slug: item.slug })
                   }
-                  underlayColor="white"
+                  underlayColor="#2C2C2E"
                   style={styles.postsContainer}
                 >
                   <Text style={[styles.text]}>
@@ -185,16 +204,16 @@ const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#4C53A6",
+    backgroundColor: "#273f87",
   },
   text: {
-    color: "white",
+    color: "#EFEFEF",
   },
   greetingBG: {
-    backgroundColor: "#04234F",
+    backgroundColor: "#0d152d",
   },
   greetingContainer: {
-    backgroundColor: "#4C53A6",
+    backgroundColor: "#273f87",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -225,7 +244,7 @@ const styles = StyleSheet.create({
     height: 72,
   },
   contentContainer: {
-    backgroundColor: "#04234F",
+    backgroundColor: "#0d152d",
     height: "100%",
   },
   heading: {
@@ -243,7 +262,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
   postsContainer: {
-    backgroundColor: "white",
+    backgroundColor: "#121212",
     padding: 20,
     borderRadius: 10,
     marginBottom: 40,
@@ -251,12 +270,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#364356",
+    color: "#EFEFEF",
     marginBottom: 10,
   },
   date: {
     fontSize: 10,
-    color: "#636D77",
+    color: "#98A1BD",
   },
 });
 

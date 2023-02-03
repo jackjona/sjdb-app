@@ -137,13 +137,13 @@ const Post = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#4C53A6",
+    backgroundColor: "#273f87",
   },
   text: {
-    color: "white",
+    color: "#EFEFEF",
   },
   contentContainer: {
-    backgroundColor: "#04234F",
+    backgroundColor: "#0d152d",
     height: "100%",
   },
   heading: {
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: "bold",
-    color: "#E6E7F2",
+    color: "#EFEFEF",
     marginTop: 20,
     marginBottom: 10,
   },

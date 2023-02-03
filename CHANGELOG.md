@@ -6,7 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Dates are formatted in YYMMDD format. Each major version has a codename, this is noted with brackets beside the version number.
 
-## [0.0.11] - Jan 22, 2023
+## [0.9.0] - Feb 2, 2023
+
+### Added
+
+- Use AsyncStorage to store and retrieve user data (student name and id number) locally
+- Add dynamic barcode generation to the profile screen
+
+### Changed
+
+- Update dependencies
+- Change theme colors
+
+### Fixed
+
+- Flickering bug when moving from home screen to calendar screen
+
+## [0.8.0] - Jan 22, 2023
 
 ### Added
 
@@ -17,7 +33,7 @@ Dates are formatted in YYMMDD format. Each major version has a codename, this is
 - Format time from _YYYY-MM-DDT00:00:00_ to _YYYY/MM/DD 00:00 PM/AM_ on the Home and Post screens
 - Get the current date and use it in the api request for the events
 
-## [0.0.10] - Jan 19, 2023
+## [0.7.0] - Jan 19, 2023
 
 ### Added
 
@@ -28,7 +44,7 @@ Dates are formatted in YYMMDD format. Each major version has a codename, this is
 - Activity indicator size from large to small
 - Rename screen names for screen stacks
 
-## [0.0.9] - Jan 19, 2023
+## [0.6.0] - Jan 19, 2023
 
 ### Added
 
@@ -41,7 +57,7 @@ Dates are formatted in YYMMDD format. Each major version has a codename, this is
 
 - Unicode characters showing up in post title text
 
-## [0.0.8] - Jan 14, 2023
+## [0.5.3] - Jan 14, 2023
 
 ### Added
 
@@ -51,43 +67,43 @@ Dates are formatted in YYMMDD format. Each major version has a codename, this is
 
 - Unicode characters showing up in home screen title text
 
-## [0.0.7] - Jan 5, 2023
+## [0.5.2] - Jan 5, 2023
 
 ### Added
 
 - Add splash screen and custom icon [Note: still need Android icon - adaptive icon]
 
-## [0.0.6] - Jan 5, 2023
+## [0.5.1] - Jan 5, 2023
 
 ### Added
 
 - Add device data to settings page
 
-## [0.0.5] - Jan 3, 2023
+## [0.5.0] - Jan 3, 2023
 
 ### Added
 
 - Built and design profile (card) screen
 
-## [0.0.4] - Jan 2, 2023
+## [0.4.0] - Jan 2, 2023
 
 ### Added
 
 - Built and design profile (card) screen [Note: Dynamic barcode generation not implemented yet - placeholder shown]
 
-## [0.0.3] - Dec 30, 2022
+## [0.3.0] - Dec 30, 2022
 
 ### Added
 
 - Set up bottom tab bar
 
-## [0.0.2] - Dec 27, 2022
+## [0.2.0] - Dec 27, 2022
 
 ### Added
 
 - Implement data fetching and make content dynamically updated in the home screen
 
-## [0.0.1] - Dec 27, 2022
+## [0.1.0] - Dec 27, 2022
 
 ### Added
 

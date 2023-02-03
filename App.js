@@ -31,17 +31,17 @@ function HomeStackScreen({ navigation }) {
         component={Post}
         options={{
           headerShown: true,
-          headerTitleStyle: { color: "#ffffff" },
+          headerTitleStyle: { color: "#fafafa" },
           labelVisible: false,
           headerStyle: {
-            backgroundColor: "#4C53A6",
+            backgroundColor: "#1a2a5a",
           },
           headerLeft: () => (
             <TouchableOpacity
               onPress={() => navigation.goBack()}
               style={styles.backButton}
             >
-              <Ionicons name="chevron-back-outline" size={30} color="#ffffff" />
+              <Ionicons name="chevron-back-outline" size={30} color="#fafafa" />
             </TouchableOpacity>
           ),
         }}
@@ -58,10 +58,10 @@ function CalendarStackScreen({ navigation }) {
         component={Calendar}
         options={{
           headerShown: true,
-          headerTitleStyle: { color: "#ffffff" },
+          headerTitleStyle: { color: "#fafafa" },
           labelVisible: false,
           headerStyle: {
-            backgroundColor: "#4C53A6",
+            backgroundColor: "#1a2a5a",
           },
         }}
       />
@@ -70,17 +70,17 @@ function CalendarStackScreen({ navigation }) {
         component={Event}
         options={{
           headerShown: true,
-          headerTitleStyle: { color: "#ffffff" },
+          headerTitleStyle: { color: "#fafafa" },
           labelVisible: false,
           headerStyle: {
-            backgroundColor: "#4C53A6",
+            backgroundColor: "#1a2a5a",
           },
           headerLeft: () => (
             <TouchableOpacity
               onPress={() => navigation.navigate("Calendar")}
               style={styles.backButton}
             >
-              <Ionicons name="chevron-back-outline" size={30} color="#ffffff" />
+              <Ionicons name="chevron-back-outline" size={30} color="#fafafa" />
             </TouchableOpacity>
           ),
         }}
@@ -91,22 +91,23 @@ function CalendarStackScreen({ navigation }) {
 
 function App() {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={{ colors: { background: "#0d152d" } }}>
       <StatusBar barStyle="light-content" />
       <Tab.Navigator
         initialRouteName={"Home"}
         screenOptions={{
           tabBarShowLabel: true,
           tabBarStyle: {
-            backgroundColor: "#04234F",
+            backgroundColor: "#0d152d",
             borderTopColor: "#121212",
             paddingVertical: 2,
           },
           tabBarActiveTintColor: "white",
+          tabBarInactiveTintColor: "gray",
           headerShown: true,
-          headerTitleStyle: { color: "#ffffff" },
+          headerTitleStyle: { color: "#fafafa" },
           headerStyle: {
-            backgroundColor: "#4C53A6",
+            backgroundColor: "#1a2a5a",
           },
         }}
       >
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   tabIcon: {
-    backgroundColor: "#8E97FD",
+    backgroundColor: "#273f87",
     padding: 5,
     borderRadius: 14,
   },

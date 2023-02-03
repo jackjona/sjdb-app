@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "Shinji - v0.0.11",
+    "name": "Shinji - v0.9.0",
     "slug": "sjdbApp",
-    "version": "0.0.11",
+    "version": "0.9.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#04234F"
+      "backgroundColor": "#0d152d"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -21,7 +21,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#04234F"
+        "backgroundColor": "#0d152d"
       }
     },
     "web": {

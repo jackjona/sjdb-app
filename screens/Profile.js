@@ -27,7 +27,7 @@ const Profile = ({ navigation }) => {
         setIdValue(idNumber);
       }
     } catch (error) {
-      console.error(error);
+      /* console.error(error); */
     }
   };
 

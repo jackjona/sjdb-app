@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Shinji - v0.9.0",
-    "slug": "sjdbApp",
-    "version": "0.9.0",
+    "name": "Shinji",
+    "slug": "shinji",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",

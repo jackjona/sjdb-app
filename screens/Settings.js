@@ -113,10 +113,7 @@ const Settings = ({ navigation }) => {
                 clearButtonMode="always"
               />
               <TouchableOpacity onPress={saveName}>
-                <Text style={[styles.text, styles.modalButton]}>
-                  {" "}
-                  Save Value{" "}
-                </Text>
+                <Text style={[styles.text, styles.modalButton]}>Save</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.button, styles.buttonClose]}
@@ -150,10 +147,7 @@ const Settings = ({ navigation }) => {
                 clearButtonMode="always"
               />
               <TouchableOpacity onPress={saveId}>
-                <Text style={[styles.text, styles.modalButton]}>
-                  {" "}
-                  Save Value{" "}
-                </Text>
+                <Text style={[styles.text, styles.modalButton]}>Save</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.button, styles.buttonClose]}

@@ -54,7 +54,7 @@ const Home = ({ navigation }) => {
         setNameValue(studentName);
       }
     } catch (error) {
-      console.error(error);
+      /* console.error(error); */
     }
   };
 

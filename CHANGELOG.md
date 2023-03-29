@@ -6,12 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Dates are formatted in YYMMDD format. Each major version has a codename, this is noted with brackets beside the version number.
 
-## [0.9.0] - Feb 2, 2023
+## [1.0.0] - Mar 29, 2023
+
+### Changed
+
+- Changed text for saving values in settings
+- Updated README
+
+## [0.9.0] - Feb 3, 2023
 
 ### Added
 
 - Use AsyncStorage to store and retrieve user data (student name and id number) locally
 - Add dynamic barcode generation to the profile screen
+- Update settings page
 
 ### Changed
 
@@ -50,8 +58,8 @@ Dates are formatted in YYMMDD format. Each major version has a codename, this is
 
 - Build calendar screen
 - Fetch calendar events from Google Calendar
-- Refresh calendar events when user swipes down and holds
-- Refresh posts when user swipes down and holds
+- Refresh calendar events (pull-to-refresh)
+- Refresh posts (pull-to-refresh)
 
 ### Fixed
 

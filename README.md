@@ -12,9 +12,10 @@ This is the repository for the redesigned SJDB mobile app. <br />
 
 ## Demo GIFs
 
-| Dark Mode                                                | Light Mode                                                |
-| -------------------------------------------------------- | --------------------------------------------------------- |
-| ![](https://i.postimg.cc/3x135Dsc/sjdb-v2-home-dark.gif) | ![](https://i.postimg.cc/kMS9MZr8/sjdb-v2-home-light.gif) |
+<p align="center">
+  <img src="https://i.postimg.cc/3x135Dsc/sjdb-v2-home-dark.gif" width="185px" height="400px" alt="">
+  <img src="https://i.postimg.cc/kMS9MZr8/sjdb-v2-home-light.gif" width="185px" height="400px" alt="">
+</p>
 
 ### View more [GIFs](#more-GIFs).
 
@@ -94,7 +95,6 @@ yarn start
 
 | Dark Mode                                                    | Light Mode                                                    |
 | ------------------------------------------------------------ | ------------------------------------------------------------- |
-| ![](https://i.postimg.cc/3x135Dsc/sjdb-v2-home-dark.gif)     | ![](https://i.postimg.cc/kMS9MZr8/sjdb-v2-home-light.gif)     |
 | ![](https://i.postimg.cc/YC91YQz6/sjdb-v2-calendar-dark.gif) | ![](https://i.postimg.cc/FKsYtp88/sjdb-v2-calendar-light.gif) |
 | ![](https://i.postimg.cc/rFqGyBdY/sjdb-v2-id-dark.gif)       | ![](https://i.postimg.cc/br9QHT5T/sjdb-v2-id-light.gif)       |
 

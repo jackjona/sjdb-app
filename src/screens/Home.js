@@ -19,7 +19,7 @@ import QuickLinks from "../components/quick-links";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen({ navigation, route }) {
-  const { width } = useWindowDimensions();
+  const { width } = useWindowDimensions(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [data, setData] = useState([]);
@@ -138,7 +138,7 @@ export default function HomeScreen({ navigation, route }) {
         onRefresh={refreshPosts}
         refreshing={isRefreshing}
         onScrollEndDrag={getMorePosts}
-        keyExtractor={({ id }, index) => id}
+        keyExtractor={({ id }) => id}
         renderItem={({ item }) => (
           <Pressable
             rounded="8"

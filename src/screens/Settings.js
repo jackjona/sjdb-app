@@ -38,6 +38,8 @@ const SettingsScreen = ({ navigation }) => {
   const [idModalVisible, setIdModalVisible] = useState(false);
   const [isLightMode, setIsLightMode] = useState(true);
 
+  const appVersion = "2.1.0 (Miku)";
+
   const saveName = () => {
     if (nameInputValue) {
       AsyncStorage.setItem("student_name", nameInputValue);
@@ -64,12 +66,10 @@ const SettingsScreen = ({ navigation }) => {
 
   const clearData = () => {
     try {
-      /*       
+      /*       AsyncStorage.setItem("studentID_number", "100743222");
+      AsyncStorage.setItem("student_name", "Miku H."); */
       AsyncStorage.setItem("studentID_number", "000000000");
-      AsyncStorage.setItem("student_name", "Student"); 
-      */
-      AsyncStorage.setItem("studentID_number", "100743222");
-      AsyncStorage.setItem("student_name", "Miku H.");
+      AsyncStorage.setItem("student_name", "Student");
       Alert.alert("Success", "Data Cleared Successfully", [{ text: "OK" }]);
     } catch (error) {
       Alert.alert("Error", "Please Enter A Value", [{ text: "OK" }]);
@@ -141,7 +141,14 @@ const SettingsScreen = ({ navigation }) => {
                 )}
                 maxLength={30}
                 // keyboardType="numeric"
-                onChangeText={(data) => setNameInputValue(data)}
+                onChangeText={(data) =>
+                  setNameInputValue(
+                    data.replace(
+                      /[`~0-9!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,
+                      ""
+                    )
+                  )
+                }
                 clearButtonMode="always"
               />
             </FormControl>
@@ -592,10 +599,33 @@ const SettingsScreen = ({ navigation }) => {
             </Box>
           </Pressable>
           <Pressable
+            py={5}
+            px={4}
+            borderBottomColor="dark.700"
+            borderBottomWidth={1}
+            bg="darkBlue.800"
+          >
+            <Box flex flexDirection={"row"} alignItems={"center"}>
+              <Icon
+                size="8"
+                as={Ionicons}
+                name="information-circle"
+                color={useColorModeValue("dark.500", "primary.100")}
+              />
+              <Text
+                pl={2}
+                fontSize="lg"
+                color={useColorModeValue("dark.700", "white")}
+              >
+                App Version: <Text color="white">{appVersion}</Text>
+              </Text>
+            </Box>
+          </Pressable>
+          <Pressable
             onPress={() => {
               Alert.alert(
                 "Developer Mode",
-                "Developer Tools Have Been Disabled For This Device",
+                "Developer tools have not been enabled for this device",
                 [{ text: "OK" }]
               );
             }}

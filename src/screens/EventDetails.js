@@ -40,14 +40,6 @@ const EventDetails = ({ navigation, route }) => {
     }
   };
 
-  useEffect(() => {
-    getEvent();
-  }, []);
-
-  useEffect(() => {
-    isFocused && getEvent();
-  }, [isFocused]);
-
   function timeConvert(time) {
     time = time
       .toString()
@@ -64,6 +56,14 @@ const EventDetails = ({ navigation, route }) => {
     }
     return time.join("");
   }
+
+  useEffect(() => {
+    getEvent();
+  }, []);
+
+  useEffect(() => {
+    isFocused && getEvent();
+  }, [isFocused]);
 
   return (
     <Box

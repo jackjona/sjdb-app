@@ -88,11 +88,7 @@ const Calendar = ({ navigation }) => {
   }
 
   return (
-    <Box
-      flex={1}
-      bg={useColorModeValue("warmGray.50", "warmGray.900")}
-      w="full"
-    >
+    <Box flex={1} bg={useColorModeValue("warmGray.50", "primary.900")} w="full">
       <Header title="Calendar">
         <Navbar />
       </Header>

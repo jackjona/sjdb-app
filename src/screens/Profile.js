@@ -247,12 +247,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   cardDetails: {
-    marginTop: 20,
+    marginTop: 10,
     alignItems: "center",
   },
   studentName: {
     fontSize: 30,
     fontWeight: "500",
+    paddingHorizontal: 20,
+    textAlign: "center",
   },
   position: {
     padding: 6,

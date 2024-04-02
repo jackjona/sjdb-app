@@ -38,7 +38,7 @@ const SettingsScreen = ({ navigation }) => {
   const [idModalVisible, setIdModalVisible] = useState(false);
   const [isLightMode, setIsLightMode] = useState(true);
 
-  const appVersion = "2.1.0 (Miku)";
+  const appVersion = "2.1.1 (Miku)";
 
   const saveName = () => {
     if (nameInputValue) {

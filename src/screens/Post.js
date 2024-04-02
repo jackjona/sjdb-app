@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { StyleSheet, FlatList, ActivityIndicator } from "react-native";
 import {
   View,
@@ -22,6 +22,8 @@ const Post = ({ navigation, route }) => {
   const [data, setData] = useState([]);
 
   const isFocused = useIsFocused();
+
+  const RenderContent = memo(RenderHtml);
 
   const getPosts = async () => {
     try {
@@ -117,7 +119,7 @@ const Post = ({ navigation, route }) => {
                     {timeConvert(item.date.split("T")[1])}
                   </Text>
                 </Box>
-                <RenderHtml
+                <RenderContent
                   renderers={renderers}
                   WebView={WebView}
                   customHTMLElementModels={customHTMLElementModels}
@@ -127,6 +129,7 @@ const Post = ({ navigation, route }) => {
                     html: `${item.content.rendered}`,
                   }}
                   tagsStyles={tagsStyles}
+                  defaultTextProps={{selectable: true}}
                   defaultWebViewProps={
                     {
                       /* Any prop you want to pass to all WebViews */

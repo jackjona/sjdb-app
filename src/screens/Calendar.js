@@ -17,7 +17,7 @@ const Calendar = ({ navigation }) => {
   {
     /* 
       API Key is: AIzaSyCyBPIqrV96idsvBD1-V8rfMKNE2MLhbCY
-      The scope must be restricted and the key should be put into an environment variable
+      The scope must be restricted and the key should be put into an environment variable in a production environment
       ---
       Testing API URL:
       https://www.googleapis.com/calendar/v3/calendars/sjdbh@ycdsb.ca/events?key=AIzaSyCyBPIqrV96idsvBD1-V8rfMKNE2MLhbCY&singleEvents=true&orderBy=startTime&timeMin=2023-01-22T00:00:00-07:00&maxResults=10

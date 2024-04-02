@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import {
   useColorModeValue,
   FlatList,
@@ -26,6 +26,8 @@ export default function HomeScreen({ navigation, route }) {
   const [nameValue, setNameValue] = useState("");
 
   const isFocused = useIsFocused();
+
+  const RenderContent = memo(RenderHtml);
 
   useEffect(() => {
     getPosts();
@@ -164,7 +166,7 @@ export default function HomeScreen({ navigation, route }) {
                 {timeConvert(item.date.split("T")[1])}
               </Text>
             </Box>
-            <RenderHtml
+            <RenderContent
               contentWidth={width}
               source={{
                 html: `${item.post_excerpt_stackable}`,
